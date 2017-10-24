@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block head_title %}Sign Up ||{{block.super}}{% endblock head_title %}
+{% block nav%}
+<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+<a href="/home" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Dashboard</a>
+{%endblock nav%}
+{% block content %}
+<h2 class="w3-center">Enter Details</h2>
+<form method="post" class="w3-card-4"style="width:50%; margin:10px 0 0 25%;padding:20px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign up</button>
+      </form>
+    {% endblock content %}

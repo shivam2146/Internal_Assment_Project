@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block head_title %}HOME ||{{block.super}}{% endblock head_title %}
+{% block nav%}<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+ {%endblock nav%}
+
+{%block content %}
+<h2>{{tea.tname}} </h2> 
+  <table border = "1" cellpadding = "5" cellspacing = "5">
+         <tr>
+            <th>Subject ID</th>
+            <th>Course Name</th>
+            <th>Link</th>
+         </tr>
+         {%for s in sub %}
+         <tr>
+            <form action="/tea1/{{s.sub_id}}" method="get">
+              {% csrf_token %}
+            <td>{{s.sub_id}}</td>
+            <td>{{s.c_id.c_id}}</td>
+            <td><button type="submit">Click</button></td>
+          </form>
+          </tr>
+         {%endfor%}
+      </table>
+{%endblock content%}

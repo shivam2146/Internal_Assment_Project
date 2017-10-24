@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block head_title %}HOME ||{{block.super}}{% endblock head_title %}
+{% block nav%}<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+ {%endblock nav%}
+
+{%block content %}
+<h2>{{sub.name}} </h2> 
+  <table border = "1" cellpadding = "5" cellspacing = "5">
+         <tr>
+            <th>Student Name</th>
+            <th>Course Name</th>
+            <th>Link</th>
+         </tr>
+         {%for s in stu %}
+         <tr>
+            <form method="get" action="/tea2/upd/{{s.suser_name}}/{{sub.sub_id}}">
+            <td>{{s.sname}}</td>
+            <td>{{s.course_id.cname}}</td>
+            <td><button type="submit">Click</button></td>
+          </form>
+          </tr>
+         {%endfor%}
+      </table>
+{%endblock content%}

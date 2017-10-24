@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>{% block head_title %}Internal Assessent System{% endblock head_title %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'students/ia_css.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'students/w3.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'students/login.css' %}">
+	</head>
+	<body style="background-color:#eeeeee">
+		<header>
+			<h1 id="siteName">Internal Assessment System</h1>
+			<nav class="w3-bar w3-card-4 w3-blue-grey">			 
+				<a href="/" class="w3-bar-item w3-button w3-left">IAS</a>
+				<a href="ia_marking_rule.html" class="w3-bar-item w3-button w3-left">IA Marking Rule</a>
+				{% block nav%} {%endblock nav%}
+				<a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="myFunction()">&#9776;</a>
+				<div id="demo" class="w3-bar-block w3-blue-grey w3-hide w3-hide-large w3-hide-medium">
+					<a href="/login" class="w3-bar-item w3-button w3-right-align w3-blue">Sign Up</a>
+				</div>
+			</nav>
+		</header>
+		{% block content %}
+		{% endblock content %}
+		
+		<script>
+		function myFunction() {
+			var x = document.getElementById("demo");
+			if (x.className.indexOf("w3-show") == -1) {
+				x.className += " w3-show";
+			} else { 
+				x.className = x.className.replace(" w3-show", "");
+			}
+		}
+		</script>
+		{% block javascript %}
+        {% endblock %}
+
+
+	</body>
+</html>

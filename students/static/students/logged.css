@@ -1,0 +1,15 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+header #siteName{
+    color: black;
+    font-size: 2.1em;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    font-variant: small-caps;
+    text-transform: capitalize;
+    background-color: lightblue;
+    border-bottom: 4px solid lightseagreen;
+}

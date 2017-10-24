@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block head_title %}{{block.super}}{% endblock head_title %}
+{% block nav%}
+{% if user.is_authenticated %}
+<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+<a href="/home" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Dashboard</a>
+{% else %}
+<a href="/login" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Login</a>
+<a href="/signup" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Sign Up</a> 
+{%endif%}
+{%endblock nav%}
+{% block content %}
+<div class="w3-row-padding w3-center w3-margin-top">
+        
+<div class="w3-full">
+        <div class="w3-card-2 w3-container" style="min-height:240px; text-align:justify;">
+              <h3>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Introduction</h3>
+              <p style=" text-indent:50px;">Internal Assessment Website helps <em>faculty members</em> to access internal marks on computer or mobile devices. It is an online website where <em>teachers can easily add, update internal marks of students</em> according to their courses based on assignment, tests, or presentations etc.</p>
+        </div>
+      </div>
+      <div class="w3-row-padding">
+			<div class="w3-half">
+				<div class="w3-card-2" style="min-height:240px">
+					<h3>New Updates</h3>
+					<ul class="bottom_boxes">
+						<li>Internal marks have been updated.</li>
+						<li>Last date for final submission.</li>
+						<li>About final submission of marks.</li>
+					</ul>
+					<button class="w3-button w3-small w3-padding-small"><b>All</b></button>
+				</div>
+			</div>
+			<div class="w3-half">
+				<div class="w3-card-2" style="min-height:240px">
+					<h3>Useful Links</h3>
+						<ul class="bottom_boxes">
+							<li><a href="http://du.ac.in">Delhi University</a></li>
+							<li><a href="http://cs.du.ac.in">Department of Computer Science</a></li>
+							<li><a href="http://exam.du.ac.in">Exam Portal</a></li>
+						</ul>
+				</div>
+			</div>	
+		</div>
+
+{% endblock %}

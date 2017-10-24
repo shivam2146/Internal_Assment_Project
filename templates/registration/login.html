@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block head_title %}Login ||{{block.super}}{% endblock head_title %}
+{% block nav%}
+<a href="/signup" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Sign Up</a> 
+{%endblock nav%}
+{% block content %}
+
+{% if form.errors %}
+
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+
+<p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+
+<p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+<h2 class="w3-center">Login</h2>
+<form method="post" class="w3-card-4"style="width:50%; margin:10px 0 0 25%;padding:20px;">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form>
+{% endblock %}
+
+

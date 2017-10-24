@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block head_title %}HOME ||{{block.super}}{% endblock head_title %}
+{% block nav%}<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+ {%endblock nav%}
+
+{% block content %}
+<br>
+<h2>STUDENT NAME</h2>
+<!-- form-->
+<table border="0" align='center' valign='baseline' width=1000 height=700 cellpadding=10 >
+
+<thead> 
+<tr><th colspan=2>Course</th><th colspan=2></th></tr><tr> <th colspan=2>Roll no</th> </th><th colspan=2></tr>
+
+<tr bgcolor="#C0C0C0"><th ></th> <th> Max Marks </th> <th colspan=2> Allotted Marks </th> </tr>
+
+<tr> <td bgcolor="#C0C0C0"> <strong> Test 1 </strong></td> <td align="center">marks</td> <td align="center">marks</td> <td align="right"><input type="button" value="Update" name="t1"></td> </tr>
+<tr> <td bgcolor="#C0C0C0"> <strong> Test 2 </strong></td> <td align="center">marks</td> <td align="center">marks</td> <td align="right"><input type="button" value="Update" name="t1"></td> </tr>
+<tr> <td bgcolor="#C0C0C0"> <strong> Assignment </strong></td> <td align="center">marks</td> <td align="center">marks</td> <td align="right"><input type="button" value="Update" name="t1"></td> </tr>
+<tr> <td bgcolor="#C0C0C0"> <strong> Remarks </strong></td> <td colspan=4><textarea rows="2" cols=125></textarea></td> </tr>
+</table>
+{%enblock content%}

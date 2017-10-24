@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block head_title %}HOME ||{{block.super}}{% endblock head_title %}
+{% block nav%}<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+ {%endblock nav%}
+
+{% block content %}
+<br>
+<h1><Center> {{stu.sname}}</Center></h1>
+<br><br><table frame="void" align='center' valign='baseline' width=1000 height=700 cellpadding=10 >
+
+<thead> 
+<tr><th colspan=2>User_ID: {{stu.suser_name}}</th><th colspan=2>Course Name: {{cour.cname}}</th></tr><tr> <th colspan=2>Roll no: {{stu.roll_no}}</th> </th><th colspan=2>Semester: {{stu.csem}}</th></tr>
+
+<tr bgcolor="#C0C0C0"><th ></th> <th >Test 1</th> <th>Test 2</th> <th>Assignment</th> </tr>
+{% for s in mar %}
+<tr> <td bgcolor="#C0C0C0"> <strong> {{s.sub_id}} </strong></td> <td>{{s.test1}}</td> <td>{{s.test2}}</td> <td>{{s.assn}}</td> </tr>
+{%endfor %}
+</table>
+{% endblock %}
