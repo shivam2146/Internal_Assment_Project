@@ -43,6 +43,9 @@ def stuhome(request):
 
 @login_required(login_url="login/")
 def teahome(request):
+    current_user = request.user.username
+    if request.user.groups.filter(name="Students"):
+        return redirect('\')
     if request.method=='POST':
         a=request.POST['subid']
         b=subject.objects.get(sub_id=a)
@@ -79,6 +82,10 @@ def teahome1(request,sid):
 
 @login_required(login_url="login/")
 def teahome2(request,sid,subid):
+    
+    current_user = request.user.username
+    if request.user.groups.filter(name="Students"):
+        return redirect('\')
     if request.method == 'POST':
         #print(request.POST['t1'])
         #print(request.POST['t2'])
