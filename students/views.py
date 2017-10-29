@@ -173,7 +173,11 @@ def signup(request):
 
 def tea_sign_try(request):
     if request.method=='POST':
-        
+        if teacher.objects.filter(tid=request.POST['tno']).exists():
+            sub=subject.objects.all()
+            s='Teacher with tid already exists'
+            return render(request,'teasign_try.html',{'sub':sub,'s':s})
+
         tea=teacher(tuser_name=request.user.username,tname=request.POST['name'],tid=request.POST['tno'])
         tea.save() 
         if(request.POST['s_id1'] != "select" ):
@@ -212,9 +216,16 @@ def tea_sign_try(request):
 def stu_sign(request):
     if request.method=='POST':
         cour= course.objects.get(c_id=request.POST['c_id'])
-        stu=student(suser_name=request.user.username,roll_no=request.POST['rno'],sname=request.POST['name'],course_id=cour,csem=request.POST['csem'])
-        stu.save()
-        return redirect('/')
+        if not student.objects.filter(roll_no=request.POST['rno']).exists(): 
+            stu=student(suser_name=request.user.username,roll_no=request.POST['rno'],sname=request.POST['name'],course_id=cour,csem=request.POST['csem'])
+            stu.save()
+            return redirect('/')
+        else:
+            #print(student.objects.filter(roll_no=request.POST['rno']))
+            cour=course.objects.all()
+            s="Student with roll no already exists"
+            return render(request,'stu_signup.html',{'cour':cour,'s':s})    
+       
     else:
         cour=course.objects.all()
         return render(request,'stu_signup.html',{'cour':cour})
