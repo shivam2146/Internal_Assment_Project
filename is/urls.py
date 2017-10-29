@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^signup/$', is_view.signup, name='signup'),
     url(r'', include('students.urls')),
     url(r'^signup/stu_signup/$',is_view.stu_sign),
-    url(r'^signup/tea_signup/$',is_view.tea_sign),
+    url(r'^signup/tea_signup/$',is_view.tea_sign_try),
    
    
 

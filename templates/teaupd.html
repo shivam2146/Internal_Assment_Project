@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block head_title %}HOME ||{{block.super}}{% endblock head_title %}
 {% block nav%}<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+<a href="/home" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Dashboard</a>
  {%endblock nav%}
 
 {% block content %}
@@ -17,8 +18,8 @@
 <form method="post">
     {% csrf_token %}
 <tr> <td bgcolor="#C0C0C0"> <strong> Test 1 </strong></td> <td>15</td> <td><input type="text" name="t1" value="{{mark.test1}}"/></td> </td> </tr>
-<tr> <td bgcolor="#C0C0C0"> <strong> Test 2 </strong></td> <td>15</td> <td><input type="text" name="t2"/></td> </td> </tr>
-<tr> <td bgcolor="#C0C0C0"> <strong> Assignment </strong></td><td>5</td> <td><input type="text" name="t3"/></td>  </tr>
+<tr> <td bgcolor="#C0C0C0"> <strong> Test 2 </strong></td> <td>15</td> <td><input type="text" name="t2" value="{{mark.test2}}"/></td> </td> </tr>
+<tr> <td bgcolor="#C0C0C0"> <strong> Assignment </strong></td><td>5</td> <td><input type="text" name="t3" value="{{mark.assn}}"/></td>  </tr>
 <tr> <td bgcolor="#C0C0C0"> <strong> Remarks </strong></td> <td colspan=4><textarea rows="2" cols=125></textarea></td> </tr>
 <tr><td></td><td></td><td align="right"><input type="submit" value="Update" ></td></tr>
 </form>

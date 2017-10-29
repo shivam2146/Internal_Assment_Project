@@ -38,16 +38,20 @@ class teaches(models.Model):
     tid = models.ForeignKey(teacher,on_delete=models.CASCADE)
     sub_id=models.ForeignKey(subject,on_delete=models.CASCADE)
     c_id=models.ForeignKey(course,on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.tuser_name)+' '+str(self.sub_id)
 
 class marks(models.Model):
     sub_id=models.ForeignKey(subject, on_delete=models.CASCADE)
     c_id=models.ForeignKey(course, on_delete=models.CASCADE)
-    suser_name=models.ForeignKey(student,primary_key=True, on_delete=models.CASCADE)
+    suser_name=models.ForeignKey(student, on_delete=models.CASCADE)
     test1=models.IntegerField()
     test1_max_marks=models.IntegerField(default=15)
     test2=models.IntegerField()
     test2_max_marks=models.IntegerField(default=15)
     assn=models.IntegerField()
     assn_max_marks=models.IntegerField(default=5)
+    class Meta:
+        unique_together = (("suser_name", "sub_id"),)
     def __str__(self):
         return str(self.suser_name)+' '+str(self.test2)+' '+str(self.test1)+' '+str(self.sub_id)

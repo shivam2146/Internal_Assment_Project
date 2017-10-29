@@ -4,12 +4,12 @@
  {%endblock nav%}
 
 {%block content %}
-<h2>{{tea.tname}} </h2> 
+<h2>{{tea.tname}} &nbsp {{tea.tid}} &nbsp {{tea.tuser_name}} </h2> 
   <table border = "1" cellpadding = "5" cellspacing = "5">
          <tr>
             <th>Subject ID</th>
             <th>Course Name</th>
-            <th>Link</th>
+            <th>Click to view students enrolled</th>
          </tr>
          {%for s in sub %}
          <tr>
@@ -23,3 +23,5 @@
          {%endfor%}
       </table>
 {%endblock content%}
+
+

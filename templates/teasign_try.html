@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block head_title %}Sign Up ||{{block.super}}{% endblock head_title %}
+{% block nav%}
+<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+<a href="/home" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Dashboard</a>
+{%endblock nav%}
+{%block content%}
+<form  method="post" class="w3-card-4"style="width:50%; margin:10px 0 0 25%;padding:20px;" >
+    {% csrf_token %}
+        <label><b>Teacher's name</b></label>
+        <input type="text" name="name"><br>
+        <label><b>Teacher's I'd </b></label><br>
+        <input type="number" name="tno" id="tno"><br><br>
+        <label><b>No of subjects</b></label><br>
+        <select id="no1" name="no1" onchange="showDiv(this)">
+            <option value="1" > 1 </option>
+            <option value="2"> 2 </option>
+            <option value="3" selected="selected"> 3 </option>
+        </select><br><br>
+        <label><b>Subject1 Id</b></label><br>
+        <select id="s_id1" name="s_id1">
+            <option value="select" selected="selected">Select subject from below </option>
+            {% for subject in sub %}
+            <option value="{{subject.sub_id}}">{{subject.sub_id}}&nbsp{{subject.name}}</option>
+            {%endfor%}
+        </select><br><br>
+        <select id="s_id2" name="s_id2">
+            <option value="select" selected="selected">Select subject from below </option>
+            {% for subject in sub %}
+            <option value="{{subject.sub_id}}">{{subject.sub_id}}&nbsp{{subject.name}}</option>
+            {%endfor%}
+        </select><br><br>
+        <select id="s_id3" name="s_id3">
+            <option value="select" selected="selected">Select subject from below </option>
+            {% for subject in sub %}
+            <option value="{{subject.sub_id}}">{{subject.sub_id}}&nbsp{{subject.name}}</option>
+            {%endfor%}
+        </select><br>
+        
+        <button type="submit">Sign up</button>
+    </form>
+{%endblock content%}
+{% block javascript %}
+<script>
+    function showDiv(elem){
+        if(elem.value == 1){
+            document.getElementById('s_id1').style.visibility = "visible";
+            document.getElementById('s_id2').style.visibility = "hidden";
+            document.getElementById('s_id3').style.visibility = "hidden";
+        }
+        if(elem.value == 2){
+            document.getElementById('s_id1').style.visibility = "visible";
+            document.getElementById('s_id2').style.visibility = "visible";
+            document.getElementById('s_id3').style.visibility = "hidden";
+        }
+        if(elem.value == 3){
+            document.getElementById('s_id1').style.visibility = "visible";
+            document.getElementById('s_id2').style.visibility = "visible";
+            document.getElementById('s_id3').style.visibility = "visible";
+        }
+}
+</script>
+{% endblock javascript %}

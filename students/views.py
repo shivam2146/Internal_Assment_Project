@@ -23,7 +23,7 @@ def logred(request):
 def stuhome(request):
     current_user = request.user.username
     if request.user.groups.filter(name="Faculty"):
-        return redirect('teacher')
+        return redirect('/teacher/')
     try:
         stu= student.objects.get(suser_name=current_user)
     except student.DoesNotExist:
@@ -37,7 +37,7 @@ def stuhome(request):
         cour=course.objects.get(c_id=cid)
     except course.DoesNotExist:
         raise Http404("course details does not exist")
-    #print(cour)
+    print(mar)
     context={'stu':stu,'mar':mar,'cour':cour}   
     return render(request,"home.html",context)
 
@@ -74,33 +74,37 @@ def teahome1(request,sid):
     print(cou)
     stu=student.objects.filter(course_id=cou,csem=sub.sem_id)
     #print(stu)
-    context={'stu':stu,'sub':sub,}   
+    context={'stu':stu,'sub':sub,'cou':cou}   
     return render(request,"teach2.html",context)
 
 @login_required(login_url="login/")
 def teahome2(request,sid,subid):
     if request.method == 'POST':
-        #print(request.POST['t1'])
-        #print(request.POST['t2'])
-        #print(request.POST['t3'])
         sub=subject.objects.get(sub_id=subid)
         #print(sub.c_id)
         cour=course.objects.get(c_id=sub.c_id.c_id)
         stu=student.objects.get(suser_name=sid)
-        m=marks(suser_name=stu,sub_id=sub,c_id=cour,test1=request.POST['t1'],test2=request.POST['t2'],assn=request.POST['t3'])
+        if not marks.objects.filter(suser_name=stu,sub_id=sub).exists():
+            m=marks(suser_name=stu,sub_id=sub,c_id=cour,test1=request.POST['t1'],test2=request.POST['t2'],assn=request.POST['t3'])
+        else:
+            m1=marks.objects.get(suser_name=stu,sub_id=sub)
+            m=marks(id=m1.id,suser_name=stu,sub_id=sub,c_id=cour,test1=request.POST['t1'],test2=request.POST['t2'],assn=request.POST['t3'])
         #print(m)
         m.save()
         return redirect('/tea1/'+subid+'/') 
-    current_user = request.user.username
-    if request.user.groups.filter(name="Student"):
-        return redirect('home')
-    stu=student.objects.get(suser_name=sid)
-   # if marks.objects.get(suser_name=stu).DoesNotExist:
-    #    mark=0
-   # else:
-    #    mark=marks.objects.get(suser_name=stu)
-    context={'stu':stu}
-    return render(request,"teaupd.html",context)
+    else:
+        current_user = request.user.username
+        if request.user.groups.filter(name="Student"):
+            return redirect('home')
+        stu=student.objects.get(suser_name=sid)
+        sub=subject.objects.get(sub_id=subid)
+        if not marks.objects.filter(suser_name=stu,sub_id=sub).exists():
+            mark=0
+            print("hola")
+        else:
+            mark=marks.objects.get(suser_name=stu,sub_id=sub)
+        context={'stu':stu,'mark':mark}
+        return render(request,"teaupd.html",context)
 
 def signup(request):
     if request.user.is_authenticated:
@@ -141,31 +145,69 @@ def signup(request):
 
     #return render(request, 'stu_signup.html', {'form': form})
     
-@login_required
-def tea_sign(request):
+#@login_required
+#def tea_sign(request):
     # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        form = Tea_SaveForm(request.POST)
+ #   if request.method == 'POST':
+  #      form = Tea_SaveForm(request.POST)
         # check whether it's valid:
-        if form.is_valid():
-            try:
-                sub= subject.objects.get(sub_id=form.cleaned_data.get('sid'))
-            except subject.DoesNotExist:
-                raise Http404("invalid subject id")
-            print(sub.c_id.c_id)
-            c= course.objects.get(c_id=sub.c_id.c_id)
-            print(sub.c_id)
-            print(c)
-            tea=teacher(tuser_name=request.user.username,tname=form.cleaned_data.get('name'),tid=form.cleaned_data.get('tid'))
-            t=teaches(tuser_name=request.user.username,tid=tea,sub_id=sub,c_id=c)
-            #print(tea)
-            tea.save()
-            t.save()  
-            return redirect('/teacher/')
-    else:
-        form = Tea_SaveForm()
+   #     if form.is_valid():
+    #        try:
+     #           sub= subject.objects.get(sub_id=form.cleaned_data.get('sid'))
+      #      except subject.DoesNotExist:
+       #         raise Http404("invalid subject id")
+        #    print(sub.c_id.c_id)
+         #   c= course.objects.get(c_id=sub.c_id.c_id)
+          #  print(sub.c_id)
+           # print(c)
+ #           tea=teacher(tuser_name=request.user.username,tname=form.cleaned_data.get('name'),tid=form.cleaned_data.get('tid'))
+  #          t=teaches(tuser_name=request.user.username,tid=tea,sub_id=sub,c_id=c)
+   #         #print(tea)
+    #        tea.save()
+     #       t.save()  
+      #      return redirect('/teacher/')
+  #  else:
+   #     form = Tea_SaveForm()
 
-    return render(request, 'tea_signup.html', {'form': form})
+    #return render(request, 'tea_signup.html', {'form': form})
+
+def tea_sign_try(request):
+    if request.method=='POST':
+        
+        tea=teacher(tuser_name=request.user.username,tname=request.POST['name'],tid=request.POST['tno'])
+        tea.save() 
+        if(request.POST['s_id1'] != "select" ):
+            try:
+                sub= subject.objects.get(sub_id=request.POST['s_id1'])
+            except subject.DoesNotExist:
+                raise Http404("invalid subject id1")
+            c= course.objects.get(c_id=sub.c_id.c_id)
+            t=teaches(tuser_name=request.user.username,tid=tea,sub_id=sub,c_id=c)
+            t.save()
+
+        if(request.POST['s_id2'] != "select" ):
+            try:
+                sub= subject.objects.get(sub_id=request.POST['s_id2'])
+            except subject.DoesNotExist:
+                raise Http404("invalid subject id2")
+            c= course.objects.get(c_id=sub.c_id.c_id)
+            t=teaches(tuser_name=request.user.username,tid=tea,sub_id=sub,c_id=c)
+            t.save()
+
+        if(request.POST['s_id3'] != "select" ):
+            try:
+                sub= subject.objects.get(sub_id=request.POST['s_id3'])
+            except subject.DoesNotExist:
+                raise Http404("invalid subject id3")
+            c= course.objects.get(c_id=sub.c_id.c_id)
+            t=teaches(tuser_name=request.user.username,tid=tea,sub_id=sub,c_id=c)
+            t.save()
+        
+        return redirect('/teacher/')
+    else:
+        sub=subject.objects.all()
+        return render(request,'teasign_try.html',{'sub':sub})
+
 @login_required
 def stu_sign(request):
     if request.method=='POST':
