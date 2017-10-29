@@ -14,9 +14,18 @@ def mainpage(request):
 
 def logred(request):
     if request.user.groups.filter(name="Faculty"):
-        return redirect('/teacher/')
+        if not teacher.objects.filter(tuser_name=request.user.username).exists():
+            return redirect('/teacher/')
+        else:
+            return redirect('/signup/tea_signup/')
     else:
-        return redirect('home')
+        if not student.objects.filter(suser_name=request.user.username).exists():
+            print("cdcd")
+            return redirect('/signup/stu_signup/')
+        else:
+            print("hkjhk")
+            print()
+            return redirect('home')
     
 
 @login_required(login_url="login/")
