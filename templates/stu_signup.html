@@ -8,9 +8,9 @@
 <form  method="post" class="w3-card-4"style="width:50%; margin:10px 0 0 25%;padding:20px;" >
     {% csrf_token %}
         <label><b>Students's name</b></label>
-        <input type="text" name="name"><br>
+        <input type="text" name="name" required><br>
         <label><b>Roll no </b></label><br>
-        <input type="number" name="rno"><span>{{s}} </span><br> 
+        <input type="number" name="rno" required><span>{{s}} </span><br> 
         <label><b>Course Id</b></label><br>
         <select id="c_id" name="c_id">
             {% for course in cour %}
@@ -18,7 +18,7 @@
             {%endfor%}
         </select><br>
         <label><b>Current Sem </b></label><br>
-        <input type="number" max="6" name="csem"><br>
+        <input type="number" max="6" name="csem" required><br>
         
         <button type="submit">Sign up</button>
     </form>

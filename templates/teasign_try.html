@@ -8,9 +8,9 @@
 <form  method="post" class="w3-card-4"style="width:50%; margin:10px 0 0 25%;padding:20px;" >
     {% csrf_token %}
         <label><b>Teacher's name</b></label>
-        <input type="text" name="name"><br>
+        <input type="text" name="name" required><br>
         <label><b>Teacher's I'd </b></label><br>
-        <input type="number" name="tno" id="tno"><span>{{s}}</span><br><br>
+        <input type="number" name="tno" id="tno" required><span>{{s}}</span><br><br>
         <label><b>No of subjects</b></label><br>
         <select id="no1" name="no1" onchange="showDiv(this)">
             <option value="1" > 1 </option>
