@@ -85,10 +85,35 @@ def teahome2(request,sid,subid):
         cour=course.objects.get(c_id=sub.c_id.c_id)
         stu=student.objects.get(suser_name=sid)
         if not marks.objects.filter(suser_name=stu,sub_id=sub).exists():
-            m=marks(suser_name=stu,sub_id=sub,c_id=cour,test1=request.POST['t1'],test2=request.POST['t2'],assn=request.POST['t3'])
+            if(request.POST['t1']=='' or request.POST['t1']=='None'  ):
+                mt1=None 
+            else:
+                mt1=request.POST['t1']
+            if(request.POST['t2']=='' or request.POST['t2']=='None'):
+                mt2=None 
+            else:
+                mt2=request.POST['t2']
+            if(request.POST['t3']=='' or request.POST['t3']=='None'):
+                mt3=None
+            else:
+                mt3=request.POST['t3']
+            
+            m=marks(suser_name=stu,sub_id=sub,c_id=cour,test1=mt1,test2=mt2,assn=mt3)
         else:
             m1=marks.objects.get(suser_name=stu,sub_id=sub)
-            m=marks(id=m1.id,suser_name=stu,sub_id=sub,c_id=cour,test1=request.POST['t1'],test2=request.POST['t2'],assn=request.POST['t3'])
+            if(request.POST['t1']=='' or request.POST['t1']=='None'):
+                mt1=None 
+            else:
+                mt1=request.POST['t1']
+            if(request.POST['t2']=='' or request.POST['t2']=='None'):
+                mt2=None 
+            else:
+                mt2=request.POST['t2']
+            if(request.POST['t3']=='' or request.POST['t3']=='None'):
+                mt3=None
+            else:
+                mt3=request.POST['t3']
+            m=marks(id=m1.id,suser_name=stu,sub_id=sub,c_id=cour,test1=mt1,test2=mt2,assn=mt3)
         #print(m)
         m.save()
         return redirect('/tea1/'+subid+'/') 
@@ -100,7 +125,7 @@ def teahome2(request,sid,subid):
         sub=subject.objects.get(sub_id=subid)
         if not marks.objects.filter(suser_name=stu,sub_id=sub).exists():
             mark=0
-            print("hola")
+            #print("hola")
         else:
             mark=marks.objects.get(suser_name=stu,sub_id=sub)
         context={'stu':stu,'mark':mark}
