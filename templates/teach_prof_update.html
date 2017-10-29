@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block head_title %}HOME ||{{block.super}}{% endblock head_title %}
+{% block nav%}<a href="/logout" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Logout</a>
+<a href="/home" class="w3-bar-item w3-button w3-right w3-hide-small w3-blue">Dashboard</a>
+ {%endblock nav%}
+
+{% block content %}
+<h2 align="center"> Add Subject  </h2>
+<form  method="post" class="w3-card-4"style="width:50%; margin:10px 0 0 25%;padding:20px;" >
+    {% csrf_token %}
+        <label><b>Teacher's name: &nbsp {{tea.tname}}</b></label> <br><br>
+        <label><b>Teacher's I'd: &nbsp {{tea.tid}}</b></label><br><br>
+        <label><b>Subject Id</b></label><br>
+        <select id="s_id1" name="s_id1">
+            <option value="select" selected="selected">Select subject from below </option>
+            {% for subject in sub %}
+            <option value="{{subject.sub_id}}">{{subject.sub_id}}&nbsp{{subject.name}}</option>
+            {%endfor%}
+        </select>{{s}}<br><br>
+    <button type="submit">Add</button>
+</form>
+{% endblock %}

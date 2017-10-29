@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',mainpage),
     url(r'^teacher/$',is_view.teahome),
+     url(r'^update_prof/$',is_view.teaUpdt),
     url(r'^tea1/(?P<sid>\w{0,50})/$',is_view.teahome1),
     url(r'^tea2/upd/(?P<sid>\w{0,50})/(?P<subid>\w{0,50})/$',is_view.teahome2),
     url(r'^logredi/$',is_view.logred),

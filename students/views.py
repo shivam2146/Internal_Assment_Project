@@ -173,8 +173,8 @@ def signup(request):
 @login_required
 def tea_sign_try(request):
     current_user = request.user.username
-        if request.user.groups.filter(name="Student"):
-            return redirect('home')
+    if request.user.groups.filter(name="Student"):
+        return redirect('home')
         
     if request.method=='POST':
         if teacher.objects.filter(tid=request.POST['tno']).exists():
@@ -240,6 +240,27 @@ def stu_sign(request):
 @login_required
 def teaUpdt(request):
     current_user = request.user.username
-        if request.user.groups.filter(name="Student"):
-            return redirect('home')
-        
+    if request.user.groups.filter(name="Student"):
+        return redirect('home')
+
+    if request.method=='POST':
+        if teaches.objects.filter(tuser_name=current_user,sub_id=request.POST['s_id1']).exists():
+            sub=subject.objects.all()
+            tea=teacher.objects.get(tuser_name=current_user)
+            s="Already teaching the subject"
+            return render(request,'teach_prof_update.html',{'sub':sub,'tea':tea,'s':s})
+        else:
+            if(request.POST['s_id1'] != "select" ):
+                try:
+                    sub= subject.objects.get(sub_id=request.POST['s_id1'])
+                except subject.DoesNotExist:
+                    raise Http404("invalid subject id1")
+                c= course.objects.get(c_id=sub.c_id.c_id)
+                tea=teacher.objects.get(tuser_name=current_user)
+                t=teaches(tuser_name=current_user,tid=tea,sub_id=sub,c_id=c)
+                t.save()
+            return redirect('home')    
+    else:
+        sub=subject.objects.all()
+        tea=teacher.objects.get(tuser_name=current_user)
+        return render(request,'teach_prof_update.html',{'sub':sub,'tea':tea})    
