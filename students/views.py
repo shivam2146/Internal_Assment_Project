@@ -45,7 +45,7 @@ def stuhome(request):
 def teahome(request):
     current_user = request.user.username
     if request.user.groups.filter(name="Students"):
-        return redirect('\')
+        return redirect('\ ')
     if request.method=='POST':
         a=request.POST['subid']
         b=subject.objects.get(sub_id=a)
@@ -85,7 +85,7 @@ def teahome2(request,sid,subid):
     
     current_user = request.user.username
     if request.user.groups.filter(name="Students"):
-        return redirect('\')
+        return redirect('\ ')
     if request.method == 'POST':
         #print(request.POST['t1'])
         #print(request.POST['t2'])
@@ -177,9 +177,14 @@ def tea_sign(request):
 def stu_sign(request):
     if request.method=='POST':
         cour= course.objects.get(c_id=request.POST['c_id'])
-        stu=student(suser_name=request.user.username,roll_no=request.POST['rno'],sname=request.POST['name'],course_id=cour,csem=request.POST['csem'])
-        stu.save()
-        return redirect('/')
+        if not student.objects.filter(roll_no=request.POST['rno']).exists : 
+            stu=student(suser_name=request.user.username,roll_no=request.POST['rno'],sname=request.POST['name'],course_id=cour,csem=request.POST['csem'])
+            stu.save()
+        else:
+            cour=course.objects.all()
+            s="Student with roll no already exists"
+            return render(request,'stu_signup.html',{'cour':cour,'s':s})    
+       
     else:
         cour=course.objects.all()
         return render(request,'stu_signup.html',{'cour':cour})
