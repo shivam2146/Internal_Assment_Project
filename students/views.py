@@ -170,8 +170,12 @@ def signup(request):
    #     form = Tea_SaveForm()
 
     #return render(request, 'tea_signup.html', {'form': form})
-
+@login_required
 def tea_sign_try(request):
+    current_user = request.user.username
+        if request.user.groups.filter(name="Student"):
+            return redirect('home')
+        
     if request.method=='POST':
         if teacher.objects.filter(tid=request.POST['tno']).exists():
             sub=subject.objects.all()
@@ -214,6 +218,9 @@ def tea_sign_try(request):
 
 @login_required
 def stu_sign(request):
+    current_user = request.user.username
+    if request.user.groups.filter(name="Faculty"):
+        return redirect('/teacher/')
     if request.method=='POST':
         cour= course.objects.get(c_id=request.POST['c_id'])
         if not student.objects.filter(roll_no=request.POST['rno']).exists(): 
@@ -229,3 +236,10 @@ def stu_sign(request):
     else:
         cour=course.objects.all()
         return render(request,'stu_signup.html',{'cour':cour})
+
+@login_required
+def teaUpdt(request):
+    current_user = request.user.username
+        if request.user.groups.filter(name="Student"):
+            return redirect('home')
+        
