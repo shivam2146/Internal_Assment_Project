@@ -54,4 +54,4 @@ class marks(models.Model):
     class Meta:
         unique_together = (("suser_name", "sub_id"),)
     def __str__(self):
-        return str(self.suser_name)+' '+str(self.test2)+' '+str(self.test1)+' '+str(self.sub_id)
+        return str(self.suser_name)+' '+str(self.test2)+' '+str(self.test1)+' '+str(self.assn)+' '+str(self.sub_id)
