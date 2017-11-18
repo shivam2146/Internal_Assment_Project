@@ -7,6 +7,7 @@ from .models import course,subject,student,teacher,marks,teaches
 from django.http import Http404
 from django.shortcuts import render
 from django.contrib.auth.models import Group
+from django.contrib.auth import logout
 
 def mainpage(request):
     #return HttpResponse("hello") 
@@ -14,18 +15,27 @@ def mainpage(request):
 
 def logred(request):
     if request.user.groups.filter(name="Faculty"):
-        if not teacher.objects.filter(tuser_name=request.user.username).exists():
-            return redirect('/teacher/')
+        if  teacher.objects.filter(tuser_name=request.user.username).exists():
+            tea=teacher.objects.get(tuser_name=request.user.username)
+            if(tea.verified==True):
+                return redirect('/teacher/')
+            else:
+                logout(request)
+                raise Http404("teacher is not verified yet")
         else:
             return redirect('/signup/tea_signup/')
     else:
-        if not student.objects.filter(suser_name=request.user.username).exists():
+        if  not student.objects.filter(suser_name=request.user.username).exists():
             print("cdcd")
             return redirect('/signup/stu_signup/')
         else:
-            print("hkjhk")
-            print()
-            return redirect('home')
+            stu=student.objects.get(suser_name=request.user.username)
+            if(stu.verified==True):
+                return redirect('home')
+            else:
+                logout(request)
+                raise Http404("student is not verified yet")
+            
     
 
 @login_required(login_url="login/")
@@ -36,7 +46,7 @@ def stuhome(request):
     try:
         stu= student.objects.get(suser_name=current_user)
     except student.DoesNotExist:
-        raise Http404("student record does not exist") 
+        raise Http404("student record does not exist")   # 
     try:   
         mar=marks.objects.filter(suser_name__suser_name=stu.suser_name)
     except marks.DoesNotExist:
@@ -245,7 +255,7 @@ def tea_sign_try(request):
             t=teaches(tuser_name=request.user.username,tid=tea,sub_id=sub,c_id=c)
             t.save()
         
-        return redirect('/teacher/')
+        return redirect('/logredi/')
     else:
         sub=subject.objects.all()
         return render(request,'teasign_try.html',{'sub':sub})
@@ -258,9 +268,14 @@ def stu_sign(request):
     if request.method=='POST':
         cour= course.objects.get(c_id=request.POST['c_id'])
         if not student.objects.filter(roll_no=request.POST['rno']).exists(): 
-            stu=student(suser_name=request.user.username,roll_no=request.POST['rno'],sname=request.POST['name'],course_id=cour,csem=request.POST['csem'])
+            stu=student(suser_name=request.user.username,s_key=request.POST['key'],roll_no=request.POST['rno'],sname=request.POST['name'],course_id=cour,csem=request.POST['csem'])
             stu.save()
-            return redirect('/')
+            sub=subject.objects.filter(c_id=cour,sem_id=request.POST['csem'])
+            for s in sub:
+                mar=marks(sub_id=s,c_id=cour,suser_name=stu,test1=None,test2=None,assn=None)
+                mar.save()
+            
+            return redirect('/logredi/')
         else:
             #print(student.objects.filter(roll_no=request.POST['rno']))
             cour=course.objects.all()

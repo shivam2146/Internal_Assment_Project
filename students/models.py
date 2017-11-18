@@ -19,6 +19,8 @@ class subject(models.Model):
 
 class student(models.Model):
     suser_name= models.CharField(max_length=25)
+    s_key=models.CharField(max_length=25,default=None)
+    verified=models.BooleanField(default=False)
     roll_no= models.IntegerField(primary_key=True)
     sname= models.CharField(max_length=50)
     course_id=models.ForeignKey(course, on_delete=models.CASCADE)
@@ -30,6 +32,7 @@ class teacher(models.Model):
     tuser_name= models.CharField(max_length=25)
     tname= models.CharField(max_length=50)
     tid= models.IntegerField(primary_key=True)
+    verified=models.BooleanField(default=False)
     def __str__(self):
         return str(self.tid)+' '+str(self.tname)
 		
