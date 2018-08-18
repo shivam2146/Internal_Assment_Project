@@ -129,5 +129,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-is/__pycache__/
-studens/__pycache__/
+/is/__pycache__/
+/studens/__pycache__/
