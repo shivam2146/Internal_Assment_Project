@@ -1,4 +1,4 @@
-Steps to run projects-:
+Steps to run project-:
 
 1.clone the repo
 
